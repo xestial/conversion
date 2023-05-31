@@ -30,6 +30,8 @@ def roman_to_decimal(roman_numeral):
     prev_value = 0
 
     for char in reversed(roman_numeral):
+        if char not in roman_dict:
+            return None
         if roman_dict[char] < prev_value:
             decimal_num -= roman_dict[char]
         else:
