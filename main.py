@@ -44,7 +44,7 @@ def roman_to_decimal(roman_numeral):
 
 def convert_temperature():
     try:
-        temperature = float(entry_temperature.get())
+        temperature = float(entry_temperature.get() or 0)
         unit = combobox_units.get()
         converted_temperature = None
 
@@ -53,30 +53,40 @@ def convert_temperature():
         elif unit == 'Celsius to Fahrenheit':
             converted_temperature = celsius_to_fahrenheit(temperature)
 
-        messagebox.showinfo("Temperature Conversion", f"{temperature} {unit.split(' to ')[0]} is equal to {converted_temperature:.2f} {unit.split(' to ')[1]}")
+        if converted_temperature is not None:
+            messagebox.showinfo("Temperature Conversion", f"{temperature:.2f} {unit.split(' to ')[0]} is equal to {converted_temperature:.2f} {unit.split(' to ')[1]}")
+        else:
+            messagebox.showerror("Error", "Invalid temperature conversion.")
     except ValueError:
         messagebox.showerror("Error", "Invalid input. Please enter a valid temperature.")
 
+
+
+
 def convert_measurement():
     try:
-        value = float(entry_measurement.get())
+        value = entry_measurement.get()
         unit = combobox_units.get()
         converted_value = None
 
         if unit == 'Miles to Kilometers':
-            converted_value = miles_to_kilometers(value)
+            converted_value = miles_to_kilometers(float(value))
         elif unit == 'Kilometers to Miles':
-            converted_value = kilometers_to_miles(value)
+            converted_value = kilometers_to_miles(float(value))
         elif unit == 'Pounds to Kilograms':
-            converted_value = pounds_to_kilograms(value)
+            converted_value = pounds_to_kilograms(float(value))
         elif unit == 'Kilograms to Pounds':
-            converted_value = kilograms_to_pounds(value)
+            converted_value = kilograms_to_pounds(float(value))
         elif unit == 'Roman to Decimal':
-            converted_value = roman_to_decimal(value)
+            converted_value = roman_to_decimal(str(value))
 
-        messagebox.showinfo("Measurement Conversion", f"{value} {unit.split(' to ')[0]} is equal to {converted_value:.2f} {unit.split(' to ')[1]}")
+        if converted_value is not None:
+            messagebox.showinfo("Measurement Conversion", f"{value} {unit.split(' to ')[0]} is equal to {converted_value} {unit.split(' to ')[1]}")
+        else:
+            messagebox.showerror("Error", "Invalid measurement conversion.")
     except ValueError:
-        messagebox.showerror("Error", "Invalid input. Please enter a valid measurement.")
+        messagebox.showerror("Error", "Invalid input. Please enter a valid value.")
+
 
 # Create the main window
 window = tk.Tk()
